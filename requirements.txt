@@ -3,3 +3,7 @@ pandas
 pydantic_settings
 uvicorn
 rich
+databases
+sqlalchemy
+asyncpg
+psycopg2

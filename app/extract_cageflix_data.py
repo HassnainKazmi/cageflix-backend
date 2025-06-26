@@ -71,13 +71,11 @@ def get_ratings(tconsts):
     logger.info("Loading title.ratings.tsv ...")
     df_ratings = pd.read_csv(TITLE_RATINGS, sep="\t", dtype=str, na_values="\\N")
     df_cage_ratings = df_ratings[df_ratings["tconst"].isin(tconsts)].copy()
-
-    df_ratings["numVotes"] = pd.to_numeric(
-        df_ratings["numVotes"], errors="coerce"
+    df_cage_ratings["numVotes"] = pd.to_numeric(
+        df_cage_ratings["numVotes"], errors="coerce"
     ).astype("Int64")
-
-    df_ratings["averageRating"] = pd.to_numeric(
-        df_ratings["averageRating"], errors="coerce"
+    df_cage_ratings["averageRating"] = pd.to_numeric(
+        df_cage_ratings["averageRating"], errors="coerce"
     )
     return df_cage_ratings
 
@@ -89,12 +87,12 @@ def get_cast_for_titles(tconsts):
     df_principals = pd.read_csv(
         TITLE_PRINCIPALS, sep="\t", dtype=str, na_values="\\N", usecols=usecols
     )
-    # Only interested in actors/actresses
     df_cast = df_principals[
         (df_principals["tconst"].isin(tconsts))
         & (df_principals["category"].isin(["actor", "actress"]))
     ].copy()
     df_cast = df_cast.drop_duplicates(subset=["tconst", "nconst"])
+    df_cast["characters"] = df_cast["characters"].str.extract(r"([A-Za-z]+)")
     all_actor_nconsts = df_cast["nconst"].unique().tolist()
     return df_cast, all_actor_nconsts
 
@@ -140,8 +138,8 @@ def extract_cageflix_data():
     df_persons = get_person_names(all_actor_nconsts + [cage_nconst])
 
     return {
+        "persons": df_persons,
         "titles": df_titles,
         "ratings": df_ratings,
         "cast": df_cast,
-        "persons": df_persons,
     }
