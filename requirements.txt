@@ -1,0 +1,5 @@
+fastapi
+pandas
+pydantic_settings
+uvicorn
+rich
