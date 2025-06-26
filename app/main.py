@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from app.database import cast, database, persons, ratings, titles
 from app.extract_cageflix_data import extract_cageflix_data
 from app.logging_conf import configure_logging
+from app.routers.titles import router as titles_router
 from app.utils import bulk_insert
 
 logger = logging.getLogger(__name__)
@@ -42,3 +43,4 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(titles_router, prefix="/api/v1")
