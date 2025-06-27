@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, HTTPException, status
 
 from app.models.search import TitleResult
 from app.services.search import fuzzy_search
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 @router.get("/search", response_model=list[TitleResult])
-async def search_result(text: str = Query(..., description="Search text from user")):
+async def search_result(text: str):
     """Search for results based on user input."""
     logger.info(f"Searching results with text: {text}")
     try:
