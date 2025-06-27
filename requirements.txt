@@ -7,3 +7,4 @@ databases
 sqlalchemy
 asyncpg
 psycopg2
+rapidfuzz
