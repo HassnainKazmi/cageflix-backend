@@ -30,7 +30,7 @@ async def read_titles(skip=0, limit=20):
         )
 
 
-@router.get("/titles/{tconst}", response_model=Titles)
+@router.get("/title", response_model=Titles)
 async def read_title_by_id(tconst: str):
     """Get a single title by its tconst."""
     logger.info(f"Getting title by id: {tconst}")
