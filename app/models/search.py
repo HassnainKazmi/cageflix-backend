@@ -8,7 +8,7 @@ class TitleResult(BaseModel):
     primaryTitle: str
     genres: list[str]
     startYear: Optional[str]
-    fellowActors: list[str]
+    cast: Optional[list[str]] = None
     averageRating: Optional[float]
     numVotes: Optional[int]
     score: float
