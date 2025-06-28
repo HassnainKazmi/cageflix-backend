@@ -3,26 +3,27 @@ from sqlalchemy import select
 from app.database import database, ratings, titles
 
 
-async def get_all_titles(skip: int = 0, limit: int = 20):
-    query = (
-        select(
-            titles.c.tconst,
-            titles.c.titleType,
-            titles.c.primaryTitle,
-            titles.c.originalTitle,
-            titles.c.isAdult,
-            titles.c.startYear,
-            titles.c.endYear,
-            titles.c.runtimeMinutes,
-            titles.c.genres,
-            ratings.c.averageRating,
-            ratings.c.numVotes,
-        )
-        .select_from(titles.outerjoin(ratings, titles.c.tconst == ratings.c.tconst))
-        .order_by(titles.c.startYear.desc())
-        .offset(skip)
-        .limit(limit)
-    )
+async def get_all_titles(
+    skip: int = 0, limit: int = 20, title_types: list[str] | None = None
+):
+    query = select(
+        titles.c.tconst,
+        titles.c.titleType,
+        titles.c.primaryTitle,
+        titles.c.originalTitle,
+        titles.c.isAdult,
+        titles.c.startYear,
+        titles.c.endYear,
+        titles.c.runtimeMinutes,
+        titles.c.genres,
+        ratings.c.averageRating,
+        ratings.c.numVotes,
+    ).select_from(titles.outerjoin(ratings, titles.c.tconst == ratings.c.tconst))
+
+    if title_types:
+        query = query.where(titles.c.titleType.in_(title_types))
+
+    query = query.order_by(titles.c.startYear.desc()).offset(skip).limit(limit)
     rows = await database.fetch_all(query)
 
     results = [
