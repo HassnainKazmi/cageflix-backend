@@ -12,3 +12,5 @@ class TitleResult(BaseModel):
     averageRating: Optional[float]
     numVotes: Optional[int]
     score: float
+    matchField: str
+    matchValue: str
