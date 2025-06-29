@@ -2,6 +2,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import cast, database, persons, ratings, titles
 from app.extract_cageflix_data import extract_cageflix_data
@@ -40,11 +41,22 @@ async def lifespan(app: FastAPI):
             logger.info("Existing data detected. Skipping ETL pipeline.")
     except Exception as e:
         logger.error("Startup pipeline failed", exc_info=e)
+        raise
     finally:
         yield
         await database.disconnect()
 
 
 app = FastAPI(lifespan=lifespan)
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(titles_router, prefix="/api/v1")
 app.include_router(search_router, prefix="/api/v1")
