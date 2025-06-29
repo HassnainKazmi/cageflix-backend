@@ -3,14 +3,14 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class TitleResult(BaseModel):
+class SearchResults(BaseModel):
     tconst: str
     primaryTitle: str
     genres: list[str]
-    startYear: Optional[str]
-    cast: Optional[list[str]] = None
-    averageRating: Optional[float]
-    numVotes: Optional[int]
+    startYear: Optional[str] = None
+    cast: list[str]
+    averageRating: Optional[float] = None
+    numVotes: Optional[int] = None
     score: float
     matchField: str
     matchValue: str

@@ -1,6 +1,6 @@
 from rapidfuzz import fuzz
 
-from app.models.search import TitleResult
+from app.models.search import SearchResults
 from app.services.helper import (
     fetch_candidate_titles,
     fetch_cast_for_titles,
@@ -37,7 +37,7 @@ def score_match_fields(text: str, title: str, genres: list[str], actors: list[st
 async def fuzzy_search(text: str, skip: int = 0, limit: int = 20):
     """
     Fuzzy search for titles, genres, or fellow actors with scoring.
-    Returns a sorted list of TitleResult.
+    Returns a sorted list of SearchResults.
     """
     candidate_titles = await fetch_candidate_titles(text, skip, limit)
     tconsts = [row["tconst"] for row in candidate_titles]
@@ -66,13 +66,13 @@ async def fuzzy_search(text: str, skip: int = 0, limit: int = 20):
         )
         if best_score > FUZZY_MATCH_THRESHOLD:
             results.append(
-                TitleResult(
+                SearchResults(
                     tconst=row["tconst"],
                     primaryTitle=row["primaryTitle"],
                     genres=genres,
                     startYear=row["startYear"],
                     description="",
-                    fellowActors=actors,
+                    cast=actors,
                     averageRating=rating_row["averageRating"] if rating_row else None,
                     numVotes=rating_row["numVotes"] if rating_row else None,
                     score=best_score,
