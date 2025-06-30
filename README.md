@@ -41,36 +41,36 @@ Built with FastAPI, async SQLAlchemy, and PostgreSQL. Handles data extraction, s
 ### Project Structure & Purpose
 
 CAGEFLIX-BACKEND/
-│
-│ 
-├── app/                                # Main application package
+│  
+├── app/                                # Main application package  
 │   ├── models/                         # Pydantic data models and schemas
-│   ├── routers/                        # FastAPI route definitions (API endpoints)
-│   │   ├── search.py                   # /search endpoint – fuzzy search API
-│   │   └── titles.py                   # /titles endpoints – all titles, single title
-│   ├── services/                       # Business logic, DB operations, helpers
-│   │   ├── helper.py                   # helper functions 
-│   │   └── search.py                   # fuzzy search queries
-│   │   └── titles.py                   # titles queries
-│   ├── __init__.py
-│   ├── config.py                       # ENV configuration
-│   ├── database.py                     # Database setup and schema creation
-│   ├── extract_cageflix_data.py        # Extract IMDB dataset
-│   ├── logging_conf.py                 # Logging configuration and setup
-│   ├── main.py                         # FastAPI app factory, entrypoint
-│   └── utils.py                        # Utility/helper functions
-│
-├── data/
-│   └── db_dump.sql                     # Prebuilt SQL dump 
-|
-├── docs/
-│   └── architecture.png                # Application architecture diagram
-|    
-├── .env.example                        # Example environment variable file for config
-├── .gitignore                          # Git ignore rules (e.g. env, pycache)
-├── Procfile                            # Railway (or Heroku) process runner definition
-├── README.md                           # Full project documentation (setup, usage, API, etc)
-├── requirements.txt                    # Python dependencies list for pip install
+|   |   ├── search.py                   # search pydantic model  
+│   │   └── titles.py                   # title pydantic model
+│   ├── routers/                        # FastAPI route definitions (API endpoints)  
+│   │   ├── search.py                   # /search endpoint – fuzzy search API  
+│   │   └── titles.py                   # /titles endpoints – all titles, single title  
+│   ├── services/                       # Business logic, DB operations, helpers  
+│   │   ├── helper.py                   # helper functions  
+│   │   ├── search.py                   # fuzzy search queries  
+│   │   └── titles.py                   # titles queries  
+│   ├── config.py                       # ENV configuration  
+│   ├── database.py                     # Database setup and schema creation  
+│   ├── extract_cageflix_data.py        # Extract IMDB dataset  
+│   ├── logging_conf.py                 # Logging configuration and setup  
+│   ├── main.py                         # FastAPI app factory, entrypoint  
+│   └── utils.py                        # Utility/helper functions  
+│  
+├── data/                               # Database dumps  
+│   └── db_dump.sql                     # Prebuilt SQL dump  
+│  
+├── docs/                               # Documentation assets  
+│   └── architecture.png                # Application architecture diagram  
+│  
+├── .env.example                        # Example environment variable file for config  
+├── .gitignore                          # Git ignore rules (e.g. env, pycache)  
+├── Procfile                            # Railway (or Heroku) process runner definition  
+├── README.md                           # Full project documentation (setup, usage, API, etc)  
+└── requirements.txt                    # Python dependencies list for pip install  
 
 ---
 
