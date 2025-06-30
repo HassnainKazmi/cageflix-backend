@@ -44,8 +44,10 @@ CAGEFLIX-BACKEND/
 │  
 ├── app/                                # Main application package  
 │   ├── models/                         # Pydantic data models and schemas
-|   |   ├── search.py                   # search pydantic model  
+
+│   │   ├── search.py                   # search pydantic model  
 │   │   └── titles.py                   # title pydantic model
+
 │   ├── routers/                        # FastAPI route definitions (API endpoints)  
 │   │   ├── search.py                   # /search endpoint – fuzzy search API  
 │   │   └── titles.py                   # /titles endpoints – all titles, single title  
