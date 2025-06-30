@@ -31,8 +31,8 @@ def create_database(db_name: str):
                 logger.info(f"Database '{db_name}' created successfully.")
             else:
                 logger.info(f"Database '{db_name}' already exists.")
-    except Exception as e:
-        logger.error(f"Error while creating database: {e}")
+    except Exception:
+        logger.error("Error while creating database", exc_info=True)
         raise
     finally:
         if conn:

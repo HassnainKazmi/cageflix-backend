@@ -18,8 +18,8 @@ async def search_result(text: str):
         if not results:
             return []
         return results
-    except Exception as e:
-        logger.error(f"Failed to search titles for text {text}", exc_info=e)
+    except Exception:
+        logger.error(f"Failed to search titles for text {text}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",

@@ -28,8 +28,8 @@ async def read_titles(skip: int = 0, limit: int = 20, titleType: str | None = No
                 detail="No titles found",
             )
         return titles
-    except Exception as e:
-        logger.error(f"Failed to get titles {e}")
+    except Exception:
+        logger.error("Failed to get titles", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
@@ -48,8 +48,8 @@ async def read_title_by_id(tconst: str):
                 detail="Title not found",
             )
         return title
-    except Exception as e:
-        logger.error(f"Failed to get title {tconst}: {e}")
+    except Exception:
+        logger.error(f"Failed to get title {tconst}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
