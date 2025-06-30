@@ -10,6 +10,11 @@ class BaseConfig(BaseSettings):
 
 class GlobalConfig(BaseConfig):
     DATABASE_URL: Optional[str] = None
+    DATABASE_NAME: Optional[str] = None
+    DATABASE_USER: Optional[str] = None
+    DATABASE_PASSWORD: Optional[str] = None
+    DATABASE_HOST: Optional[str] = None
+    DATABASE_PORT: Optional[str] = None
 
 
 class DevConfig(GlobalConfig):

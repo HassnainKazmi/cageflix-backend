@@ -1,7 +1,45 @@
+import logging
+
 import databases
+import psycopg2
 import sqlalchemy
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from app.config import config
+
+logger = logging.getLogger(__name__)
+
+
+def create_database(db_name: str):
+    """Check if the target PostgreSQL database exists, create it if it does not."""
+    conn = None
+    try:
+        conn = psycopg2.connect(
+            dbname="postgres",
+            user=config.DATABASE_USER,
+            password=config.DATABASE_PASSWORD,
+            host=config.DATABASE_HOST,
+            port=config.DATABASE_PORT,
+        )
+        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (db_name,))
+            exists = cursor.fetchone()
+            if not exists:
+                logger.info(f"Database '{db_name}' does not exist. Creating it...")
+                cursor.execute(f'CREATE DATABASE "{db_name}"')
+                logger.info(f"Database '{db_name}' created successfully.")
+            else:
+                logger.info(f"Database '{db_name}' already exists.")
+    except Exception as e:
+        logger.error(f"Error while creating database: {e}")
+        raise
+    finally:
+        if conn:
+            conn.close()
+
+
+create_database(config.DATABASE_NAME)
 
 metadata = sqlalchemy.MetaData()
 
@@ -14,7 +52,6 @@ persons = sqlalchemy.Table(
     sqlalchemy.Column("deathYear", sqlalchemy.String),
     sqlalchemy.Column("primaryProfession", sqlalchemy.String),
 )
-
 
 titles = sqlalchemy.Table(
     "titles",
