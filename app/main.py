@@ -39,8 +39,8 @@ async def lifespan(app: FastAPI):
                 logger.info("Data extraction and insertion complete!")
         else:
             logger.info("Existing data detected. Skipping ETL pipeline.")
-    except Exception as e:
-        logger.error("Startup pipeline failed", exc_info=e)
+    except Exception:
+        logger.error("Startup pipeline failed", exc_info=True)
         raise
     finally:
         yield

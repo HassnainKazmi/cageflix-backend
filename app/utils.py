@@ -32,8 +32,8 @@ async def bulk_insert(table, df: pd.DataFrame, pk_columns):
     try:
         await database.execute_many(query=query, values=values)
         logger.info(f"Inserted {len(values)} rows into {table.name}")
-    except Exception as e:
-        logger.error(f"Failed to insert data into {table.name}", exc_info=e)
+    except Exception:
+        logger.error(f"Failed to insert data into {table.name}", exc_info=True)
 
 
 async def is_table_populated(database, table):
