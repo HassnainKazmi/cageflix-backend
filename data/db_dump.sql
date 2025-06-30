@@ -23,9 +23,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
-CREATE DATABASE IF NOT EXISTS ""
-
-
 --
 -- TOC entry 220 (class 1259 OID 40145)
 -- Name: cast; Type: TABLE; Schema: public; Owner: postgres
